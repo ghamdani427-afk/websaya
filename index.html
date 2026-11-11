@@ -1,1 +1,538 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Portofolio pribadi Gilang, berisi eksperimen desain web, pemrograman, dan pengembangan game.">
+<meta name="author" content="Gilang">
+<meta name="theme-color" content="#171916">
+<meta name="color-scheme" content="dark light">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Gilang Portfolio">
+<meta name="mobile-web-app-capable" content="yes">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gilang — Personal Portfolio">
+<meta property="og:description" content="Portofolio desain web dan pemrograman.">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Gilang Portfolio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gilang — Portfolio">
+<meta name="twitter:description" content="Portofolio desain web dan pemrograman.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23171916'/%3E%3Ctext x='50' y='69' text-anchor='middle' font-size='62' fill='%23E9A45B'%3EG%3C/text%3E%3C/svg%3E">
+<title>Gilang — Personal Portfolio</title>
+
+<style>
+:root {
+ --bg:#171916;
+ --panel:#20231e;
+ --text:#e9e5da;
+ --muted:#a9a99c;
+ --accent:#e9a45b;
+ --line:#414239;
+ --display:Georgia,serif;
+ --body:"Trebuchet MS",Arial,sans-serif;
+ --space:8px;
+}
+* {box-sizing:border-box}
+html {scroll-behavior:smooth;scroll-padding-top:90px;-webkit-text-size-adjust:100%}
+body {
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:var(--body);font-size:16px;line-height:1.6;
+ overflow-x:hidden;
+}
+body::after {
+ content:"";position:fixed;inset:0;pointer-events:none;z-index:10;
+ opacity:.045;
+ background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+a {color:inherit;text-decoration:none}
+button,input,textarea {font:inherit}
+button,a {-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible {
+ outline:3px solid var(--accent);outline-offset:4px
+}
+img,svg {max-width:100%}
+.container {width:min(1160px,calc(100% - 48px));margin:auto}
+header {
+ position:sticky;top:0;z-index:20;
+ background:rgba(23,25,22,.96);
+ border-bottom:1px solid var(--line);
+}
+.nav {
+ min-height:76px;display:flex;align-items:center;
+ justify-content:space-between;gap:24px;
+}
+.logo {font-family:var(--display);font-size:25px;font-weight:bold}
+.logo span {color:var(--accent)}
+.nav-links {display:flex;align-items:center;gap:32px}
+.nav-links a {color:var(--muted);font-size:14px;transition:color .2s}
+.nav-links a:hover,.nav-links a.active {color:var(--accent)}
+.menu-btn {
+ display:none;background:transparent;color:var(--text);
+ border:1px solid var(--line);min-width:46px;min-height:46px;
+ border-radius:4px;cursor:pointer;
+}
+.hero {
+ min-height:650px;padding:110px 0 100px;
+ display:grid;grid-template-columns:1.35fr .65fr;
+ align-items:center;gap:60px;
+}
+.eyebrow {
+ color:var(--accent);font-size:12px;
+ letter-spacing:3px;text-transform:uppercase;font-weight:bold;
+}
+h1 {
+ font-family:var(--display);font-size:clamp(54px,8.5vw,105px);
+ line-height:.98;letter-spacing:-4px;
+ font-weight:normal;margin:24px 0;
+}
+h1 em {color:var(--accent);font-weight:normal}
+.hero-desc {max-width:550px;color:var(--muted);font-size:18px}
+.actions {display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+.btn {
+ min-height:50px;padding:13px 22px;display:inline-flex;
+ justify-content:center;align-items:center;gap:10px;
+ border:1px solid var(--accent);background:var(--accent);
+ color:#211b14;font-weight:bold;cursor:pointer;
+ transition:transform .2s,background .2s;
+}
+.btn:hover {transform:translateY(-3px);background:#f4bd83}
+.btn.outline {background:transparent;color:var(--text);border-color:var(--line)}
+.btn.outline:hover {border-color:var(--accent);color:var(--accent)}
+.hero-aside {
+ border-left:1px solid var(--line);padding:20px 0 20px 35px;
+}
+.hero-mark {
+ font-family:var(--display);font-size:clamp(110px,17vw,210px);
+ line-height:1;color:var(--accent);
+}
+.aside-note {color:var(--muted);font-size:14px;max-width:220px}
+.section {padding:105px 0;border-top:1px solid var(--line)}
+.section-heading {
+ display:flex;align-items:end;justify-content:space-between;
+ gap:24px;margin-bottom:48px;
+}
+.section-heading h2 {
+ font-family:var(--display);font-size:clamp(38px,6vw,65px);
+ line-height:1.05;font-weight:normal;margin:10px 0 0;
+ letter-spacing:-2px;
+}
+.section-heading p {color:var(--muted);max-width:330px}
+.about-grid {display:grid;grid-template-columns:1fr 1fr;gap:80px}
+.about-copy {font-size:20px;line-height:1.8}
+.about-copy strong {color:var(--accent);font-weight:normal}
+.stats {display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.stat {border-top:1px solid var(--line);padding-top:20px}
+.stat strong {font-family:var(--display);font-size:48px;color:var(--accent);font-weight:normal}
+.stat p {color:var(--muted);margin:0}
+.skills {display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.skill {
+ padding:12px 18px;border:1px solid var(--line);
+ color:var(--text);font-size:14px;
+}
+.projects {display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.project {
+ background:var(--panel);border:1px solid var(--line);
+ overflow:hidden;transition:border-color .2s,transform .2s;
+}
+.project:hover {border-color:var(--accent);transform:translateY(-5px)}
+.project-art {
+ min-height:230px;display:flex;align-items:center;
+ justify-content:center;padding:30px;
+ background:#282a22;position:relative;overflow:hidden;
+}
+.project-art::before {
+ content:"";position:absolute;width:220px;height:220px;
+ border:1px solid #6d5a42;transform:rotate(45deg);
+}
+.project-art span {
+ position:relative;font-family:var(--display);
+ font-size:clamp(30px,5vw,55px);color:var(--accent);
+ text-align:center;
+}
+.project-content {padding:28px}
+.project-top {display:flex;justify-content:space-between;gap:10px}
+.project-number {color:var(--accent);font-size:12px}
+.project h3 {font-family:var(--display);font-size:28px;font-weight:normal;margin:12px 0}
+.project p {color:var(--muted);font-size:15px}
+.tags {display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.tags span {font-size:12px;border:1px solid var(--line);padding:5px 9px;color:var(--muted)}
+.project-link {
+ display:inline-flex;margin-top:24px;color:var(--accent);
+ font-size:14px;font-weight:bold;
+}
+.project-link:hover {text-decoration:underline}
+.contact-grid {display:grid;grid-template-columns:1fr 1fr;gap:70px}
+.contact-title {
+ font-family:var(--display);font-size:clamp(48px,7vw,78px);
+ line-height:1.05;font-weight:normal;margin:15px 0;
+}
+.contact-title em {color:var(--accent)}
+.contact-info {color:var(--muted);max-width:430px}
+form {display:grid;gap:17px}
+label {font-size:14px;color:var(--muted)}
+input,textarea {
+ width:100%;margin-top:7px;padding:14px;
+ color:var(--text);background:var(--panel);
+ border:1px solid var(--line);border-radius:0;
+ font-size:16px;min-height:50px;
+}
+textarea {min-height:125px;resize:vertical}
+input:focus,textarea:focus {border-color:var(--accent)}
+.form-message {color:var(--accent);min-height:26px;font-size:14px}
+footer {
+ border-top:1px solid var(--line);padding:30px 0;
+ color:var(--muted);font-size:13px;
+}
+.footer-row {display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.reveal {opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.reveal.show {opacity:1;transform:none}
+.back-top {
+ position:fixed;bottom:25px;right:25px;width:48px;height:48px;
+ border:1px solid var(--accent);background:var(--panel);
+ color:var(--accent);cursor:pointer;z-index:15;
+ display:none;
+}
+.back-top.visible {display:block}
+#status {font-size:13px;color:var(--accent)}
+@media(max-width:768px) {
+ .container {width:calc(100% - 36px)}
+ .hero {grid-template-columns:1fr;min-height:auto;padding:90px 0;gap:30px}
+ .hero-aside {border-left:0;border-top:1px solid var(--line);padding:25px 0}
+ .hero-mark {font-size:115px}
+ .about-grid,.contact-grid {grid-template-columns:1fr;gap:38px}
+ .section {padding:75px 0}
+ .section-heading {align-items:start;flex-direction:column;margin-bottom:32px}
+ .nav-links {
+ display:none;position:absolute;top:76px;left:0;right:0;
+ padding:20px 24px;background:var(--bg);
+ border-bottom:1px solid var(--line);
+ flex-direction:column;align-items:stretch;gap:0;
+ }
+ .nav-links.open {display:flex}
+ .nav-links a {padding:14px 0;border-bottom:1px solid var(--line)}
+ .menu-btn {display:block}
+}
+@media(max-width:480px) {
+ .container {width:calc(100% - 32px)}
+ h1 {letter-spacing:-2px}
+ .hero {padding:70px 0}
+ .projects {grid-template-columns:1fr}
+ .project-art {min-height:185px}
+ .section {padding:65px 0}
+ .stats {gap:18px}
+ .stat strong {font-size:38px}
+ .back-top {right:17px;bottom:20px}
+}
+@media(min-width:1200px) {
+ .hero {min-height:730px}
+}
+@media(prefers-reduced-motion:reduce) {
+ *,*::before,*::after {
+ animation:none!important;transition:none!important;
+ scroll-behavior:auto!important
+ }
+ .reveal {opacity:1;transform:none}
+}
+</style>
+</head>
+
+<body>
+<header>
+ <div class="container nav">
+  <a class="logo" href="#home" aria-label="Gilang, halaman utama">G<span>.</span></a>
+  <nav class="nav-links" id="navLinks" aria-label="Navigasi utama">
+   <a href="#home">Beranda</a>
+   <a href="#about">Tentang</a>
+   <a href="#projects">Proyek</a>
+   <a href="#contact">Kontak</a>
+  </nav>
+  <button class="menu-btn" id="menuBtn" aria-label="Buka navigasi" aria-expanded="false">☰</button>
+ </div>
+</header>
+
+<main>
+<section class="container hero" id="home">
+ <div class="reveal">
+  <div class="eyebrow">Portofolio pribadi / 2026</div>
+  <h1>Menciptakan<br>sesuatu yang<br><em>bermakna.</em></h1>
+  <p class="hero-desc">
+   Halo, saya Gilang. Saya tertarik pada dunia teknologi,
+   desain digital, pemrograman, dan pengembangan game.
+   Saya senang mengubah ide menjadi karya digital.
+  </p>
+  <div class="actions">
+   <a href="#projects" class="btn">Lihat Karya <span>↗</span></a>
+   <a href="#contact" class="btn outline">Hubungi Saya</a>
+  </div>
+ </div>
+ <aside class="hero-aside reveal">
+  <div class="hero-mark">G.</div>
+  <div class="eyebrow">Creative / Developer</div>
+  <p class="aside-note">Belajar, bereksperimen, dan membangun sesuatu melalui teknologi.</p>
+ </aside>
+</section>
+
+<section class="section" id="about">
+ <div class="container">
+  <div class="section-heading reveal">
+   <div><div class="eyebrow">01 / Tentang saya</div>
+    <h2>Mengenal lebih<br>dekat.</h2></div>
+   <p>Teknologi adalah ruang untuk mencoba, belajar, dan mengembangkan ide.</p>
+  </div>
+  <div class="about-grid">
+   <div class="about-copy reveal">
+    Saya adalah seorang pelajar yang memiliki ketertarikan
+    pada <strong>pemrograman web, desain antarmuka,
+    dan pengembangan game.</strong>
+    Saya terus belajar untuk membuat karya yang menarik,
+    berguna, dan mudah digunakan.
+   </div>
+   <div class="reveal">
+    <div class="stats">
+     <div class="stat"><strong>01</strong><p>Rasa ingin tahu</p></div>
+     <div class="stat"><strong>02</strong><p>Kreativitas</p></div>
+     <div class="stat"><strong>03</strong><p>Eksperimen</p></div>
+     <div class="stat"><strong>04</strong><p>Pengembangan</p></div>
+    </div>
+    <div class="skills">
+     <span class="skill">HTML</span>
+     <span class="skill">CSS</span>
+     <span class="skill">JavaScript</span>
+     <span class="skill">UI Design</span>
+     <span class="skill">Game Development</span>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="projects">
+ <div class="container">
+  <div class="section-heading reveal">
+   <div><div class="eyebrow">02 / Eksplorasi karya</div>
+    <h2>Ide menjadi<br>kenyataan.</h2></div>
+   <p>Beberapa konsep proyek yang menggambarkan bidang yang saya pelajari.</p>
+  </div>
+
+  <div class="projects">
+   <article class="project reveal">
+    <div class="project-art"><span>WEB<br>ORDER.</span></div>
+    <div class="project-content">
+     <div class="project-top"><span class="project-number">PROJECT / 001</span><span>01</span></div>
+     <h3>Website Pemesanan</h3>
+     <p>Konsep website pemesanan dengan tampilan produk, informasi harga, dan alur pemesanan yang terstruktur.</p>
+     <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+     <a class="project-link" href="#contact">Diskusikan konsep ↗</a>
+    </div>
+   </article>
+
+   <article class="project reveal">
+    <div class="project-art"><span>DUNGEON<br>QUEST.</span></div>
+    <div class="project-content">
+     <div class="project-top"><span class="project-number">PROJECT / 002</span><span>02</span></div>
+     <h3>RPG Dungeon</h3>
+     <p>Eksplorasi konsep game RPG dengan petualangan dungeon, karakter, tantangan, dan sistem permainan.</p>
+     <div class="tags"><span>JavaScript</span><span>Game</span><span>Canvas</span></div>
+     <a class="project-link" href="#contact">Diskusikan konsep ↗</a>
+    </div>
+   </article>
+
+   <article class="project reveal">
+    <div class="project-art"><span>SYAM<br>PANEL.</span></div>
+    <div class="project-content">
+     <div class="project-top"><span class="project-number">PROJECT / 003</span><span>03</span></div>
+     <h3>Dashboard Interface</h3>
+     <p>Konsep antarmuka dashboard modern dengan perhatian pada navigasi, keterbacaan, dan tampilan responsif.</p>
+     <div class="tags"><span>UI Design</span><span>CSS</span><span>Responsive</span></div>
+     <a class="project-link" href="#contact">Diskusikan konsep ↗</a>
+    </div>
+   </article>
+
+   <article class="project reveal">
+    <div class="project-art"><span>CREATIVE<br>LAB.</span></div>
+    <div class="project-content">
+     <div class="project-top"><span class="project-number">PROJECT / 004</span><span>04</span></div>
+     <h3>Eksperimen Digital</h3>
+     <p>Ruang eksplorasi untuk menguji ide desain, interaksi, animasi, dan pengalaman pengguna.</p>
+     <div class="tags"><span>Creative</span><span>Prototyping</span><span>Web</span></div>
+     <a class="project-link" href="#contact">Diskusikan konsep ↗</a>
+    </div>
+   </article>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="contact">
+ <div class="container contact-grid">
+  <div class="reveal">
+   <div class="eyebrow">03 / Mari terhubung</div>
+   <h2 class="contact-title">Punya ide?<br><em>Ceritakan.</em></h2>
+   <p class="contact-info">
+    Punya pertanyaan, ide proyek, atau ingin berdiskusi
+    tentang teknologi? Kirim pesan melalui formulir ini.
+   </p>
+  </div>
+  <form id="contactForm" class="reveal">
+   <label>Nama
+    <input id="name" type="text" placeholder="Nama kamu" required maxlength="60" autocomplete="name">
+   </label>
+   <label>Alamat email
+    <input id="email" type="email" placeholder="nama@email.com" required maxlength="100" autocomplete="email">
+   </label>
+   <label>Pesan
+    <textarea id="message" placeholder="Ceritakan ide atau pesanmu..." required maxlength="1000"></textarea>
+   </label>
+   <button class="btn" type="submit">Salin pesan <span>↗</span></button>
+   <p class="form-message" id="formMessage" role="status" aria-live="polite">Pesan akan disalin agar bisa kamu kirim melalui aplikasi email.</p>
+  </form>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="container footer-row">
+  <span>© <span id="year"></span> GILANG PORTFOLIO.</span>
+  <span>Dibuat dengan rasa ingin tahu.</span>
+  <a href="#home">Kembali ke atas ↑</a>
+ </div>
+</footer>
+
+<button class="back-top" id="backTop" aria-label="Kembali ke atas">↑</button>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+const menuBtn = $("menuBtn");
+const navLinks = $("navLinks");
+const backTop = $("backTop");
+const form = $("contactForm");
+const formMessage = $("formMessage");
+
+function safeRun(fn) {
+ try { fn(); }
+ catch (error) {
+  formMessage.textContent = "Terjadi kendala. Silakan muat ulang halaman.";
+ }
+}
+
+function init() {
+ $("year").textContent = new Date().getFullYear();
+
+ menuBtn.addEventListener("click", () => {
+  const open = navLinks.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", String(open));
+  menuBtn.setAttribute("aria-label", open ? "Tutup navigasi" : "Buka navigasi");
+  menuBtn.textContent = open ? "✕" : "☰";
+ });
+
+ navLinks.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+   navLinks.classList.remove("open");
+   menuBtn.setAttribute("aria-expanded","false");
+   menuBtn.setAttribute("aria-label","Buka navigasi");
+   menuBtn.textContent = "☰";
+  });
+ });
+
+ const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+   if(entry.isIntersecting) {
+    entry.target.classList.add("show");
+    revealObserver.unobserve(entry.target);
+   }
+  });
+ }, {threshold:0.12});
+
+ document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+
+ const sections = document.querySelectorAll("main section[id]");
+ const navObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+   if(entry.isIntersecting) {
+    navLinks.querySelectorAll("a").forEach(a => {
+     a.classList.toggle("active",a.getAttribute("href") === "#" + entry.target.id);
+    });
+   }
+  });
+ }, {rootMargin:"-30% 0px -60% 0px"});
+
+ sections.forEach(section => navObserver.observe(section));
+
+ function updateScroll() {
+  backTop.classList.toggle("visible",window.scrollY > 500);
+ }
+ window.addEventListener("scroll",updateScroll,{passive:true});
+ updateScroll();
+
+ backTop.addEventListener("click",() => {
+  window.scrollTo({top:0,behavior:"smooth"});
+ });
+
+ form.addEventListener("submit",async event => {
+  event.preventDefault();
+  safeRun(async () => {
+   const name = $("name").value.trim();
+   const email = $("email").value.trim();
+   const message = $("message").value.trim();
+
+   if(!name || !email || !message) {
+    formMessage.textContent = "Lengkapi nama, email, dan pesan terlebih dahulu.";
+    return;
+   }
+
+   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    formMessage.textContent = "Format email belum benar. Periksa kembali alamat email.";
+    $("email").focus();
+    return;
+   }
+
+   const content = "Pesan dari pengunjung portofolio\n\nNama: " +
+    name + "\nEmail: " + email + "\n\nPesan:\n" + message;
+
+   const button = form.querySelector("button");
+   button.disabled = true;
+   button.textContent = "Menyalin...";
+
+   try {
+    if(navigator.clipboard && window.isSecureContext) {
+     await navigator.clipboard.writeText(content);
+    } else {
+     const temp = document.createElement("textarea");
+     temp.value = content;
+     temp.style.position = "fixed";
+     temp.style.opacity = "0";
+     document.body.appendChild(temp);
+     temp.select();
+     const copied = document.execCommand("copy");
+     temp.remove();
+     if(!copied) throw new Error("Salin gagal");
+    }
+    formMessage.textContent = "Pesan berhasil disalin. Sekarang kamu bisa mengirimkannya melalui email.";
+   } catch(error) {
+    formMessage.textContent = "Pesan belum bisa disalin. Periksa izin clipboard browser.";
+   } finally {
+    button.disabled = false;
+    button.innerHTML = 'Salin pesan <span>↗</span>';
+   }
+  });
+ });
+
+ // Navigasi kembali yang tetap aman pada layar kecil.
+ window.addEventListener("resize",() => {
+  if(window.innerWidth > 768) {
+   navLinks.classList.remove("open");
+   menuBtn.setAttribute("aria-expanded","false");
+  }
+ },{passive:true});
+}
+
+if(document.readyState === "loading") {
+ document.addEventListener("DOMContentLoaded",() => safeRun(init),{once:true});
+} else {
+ safe
