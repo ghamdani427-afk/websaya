@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Dash - Game Matematika Seru</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --background: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --accent: #22c55e;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+            color: #818cf8;
+        }
+
+        p.subtitle {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Tombol & Form */
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+            transition: background 0.2s;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background-color: #334155;
+            color: white;
+            border: 1px solid #475569;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+        }
+
+        /* Area Permainan */
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .score {
+            color: var(--accent);
+        }
+
+        .timer {
+            color: var(--danger);
+        }
+
+        .question-box {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 1.5rem 0;
+            background: #334155;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1.5rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            border: 2px solid #475569;
+            background-color: #0f172a;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Layar Hasil */
+        .final-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 1. Menu Utama -->
+        <div id="menu-screen" class="screen active">
+            <h1>Math Dash</h1>
+            <p class="subtitle">Asah otakmu dengan matematika dasar!</p>
+            
+            <div class="input-group">
+                <label for="difficulty">Pilih Tingkat Kesulitan:</label>
+                <select id="difficulty">
+                    <option value="easy">Mudah (Penjumlahan & Pengurangan)</option>
+                    <option value="medium">Sedang (Perkalian & Pembagian)</option>
+                    <option value="hard">Sulit (Campuran & Angka Lebih Besar)</option>
+                </select>
+            </div>
+
+            <button class="btn" onclick="startGame()">Mulai Main</button>
+        </div>
+
+        <!-- 2. Layar Game -->
+        <div id="game-screen" class="screen">
+            <div class="game-info">
+                <div>Skor: <span id="score" class="score">0</span></div>
+                <div>Waktu: <span id="timer" class="timer">30</span>s</div>
+            </div>
+
+            <div class="question-box" id="question">5 + 3</div>
+
+            <form id="answer-form" onsubmit="checkAnswer(event)">
+                <input type="number" id="user-answer" placeholder="Jawaban" autocomplete="off" autofocus>
+                <button type="submit" class="btn">Kirim</button>
+            </form>
+        </div>
+
+        <!-- 3. Layar Selesai (Game Over) -->
+        <div id="gameover-screen" class="screen">
+            <h1>Waktu Habis!</h1>
+            <p class="subtitle">Permainan selesai, kerja bagus!</p>
+            <p>Skor Akhir Kamu:</p>
+            <div class="final-score" id="final-score">0</div>
+            <button class="btn" onclick="returnToMenu()">Menu Utama</button>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let timeLeft = 30;
+        let timerInterval;
+        let currentAnswer = 0;
+        let currentDifficulty = 'easy';
+
+        const menuScreen = document.getElementById('menu-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const gameoverScreen = document.getElementById('gameover-screen');
+        
+        const scoreEl = document.getElementById('score');
+        const timerEl = document.getElementById('timer');
+        const questionEl = document.getElementById('question');
+        const userAnswerEl = document.getElementById('user-answer');
+        const finalScoreEl = document.getElementById('final-score');
+        const difficultySelect = document.getElementById('difficulty');
+
+        function switchScreen(screenToShow) {
+            [menuScreen, gameScreen, gameoverScreen].forEach(screen => {
+                screen.classList.remove('active');
+            });
+            screenToShow.classList.add('active');
+        }
+
+        function startGame() {
+            score = 0;
+            timeLeft = 30;
+            currentDifficulty = difficultySelect.value;
+            
+            scoreEl.textContent = score;
+            timerEl.textContent = timeLeft;
+            
+            switchScreen(gameScreen);
+            generateQuestion();
+            
+            userAnswerEl.focus();
+
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function generateQuestion() {
+            let num1, num2, operator;
+            const operatorsEasy = ['+', '-'];
+            const operatorsMedium = ['*', '/'];
+            const operatorsHard = ['+', '-', '*', '/'];
+
+            if (currentDifficulty === 'easy') {
+                operator = operatorsEasy[Math.floor(Math.random() * operatorsEasy.length)];
+                num1 = Math.floor(Math.random() * 10) + 1;
+                num2 = Math.floor(Math.random() * 10) + 1;
+                if (operator === '-' && num1 < num2) [num1, num2] = [num2, num1];
+            } else if (currentDifficulty === 'medium') {
+                operator = operatorsMedium[Math.floor(Math.random() * operatorsMedium.length)];
+                if (operator === '*') {
+                    num1 = Math.floor(Math.random() * 10) + 1;
+                    num2 = Math.floor(Math.random() * 10) + 1;
+                } else {
+                    num2 = Math.floor(Math.random() * 9) + 1;
+                    let multiplier = Math.floor(Math.random() * 10) + 1;
+                    num1 = num2 * multiplier;
+                }
+            } else {
+                operator = operatorsHard[Math.floor(Math.random() * operatorsHard.length)];
+                num1 = Math.floor(Math.random() * 40) + 10;
+                num2 = Math.floor(Math.random() * 20) + 1;
+                if (operator === '-') {
+                    if (num1 < num2) [num1, num2] = [num2, num1];
+                } else if (operator === '*') {
+                    num1 = Math.floor(Math.random() * 12) + 1;
+                    num2 = Math.floor(Math.random() * 12) + 1;
+                } else if (operator === '/') {
+                    num2 = Math.floor(Math.random() * 10) + 1;
+                    let multiplier = Math.floor(Math.random() * 10) + 1;
+                    num1 = num2 * multiplier;
+                }
+            }
+
+            switch (operator) {
+                case '+': currentAnswer = num1 + num2; break;
+                case '-': currentAnswer = num1 - num2; break;
+                case '*': currentAnswer = num1 * num2; break;
+                case '/': currentAnswer = num1 / num2; break;
+            }
+
+            questionEl.textContent = `${num1} ${operator} ${num2}`;
+        }
+
+        function checkAnswer(e) {
+            e.preventDefault();
+            const userVal = parseInt(userAnswerEl.value);
+
+            if (userVal === currentAnswer) {
+                score += 10;
+                scoreEl.textContent = score;
+            }
+            
+            userAnswerEl.value = '';
+            generateQuestion();
+        }
+
+        function endGame() {
+            finalScoreEl.textContent = score;
+            switchScreen(gameoverScreen);
+        }
+
+        function returnToMenu() {
+            switchScreen(menuScreen);
+        }
+    </script>
+</body>
+</html>
